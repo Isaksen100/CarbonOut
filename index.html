@@ -88,5 +88,12 @@
 
   <!-- ✅ Botón de instalación flotante -->
   <script type="module" src="pwa.js"></script>
+
+  <script>
+  window.addEventListener('beforeinstallprompt', (e) => {
+    console.log('[PWA] ✅ beforeinstallprompt disparado');
+  });
+</script>
+
 </body>
 </html>
