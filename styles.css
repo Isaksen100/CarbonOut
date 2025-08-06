@@ -782,3 +782,29 @@ footer {
     margin: auto;
   }
 }
+
+.hamburger {
+  font-size: 1.8rem;
+  background: none;
+  border: none;
+  color: #2e7d32;
+  cursor: pointer;
+  display: none;
+}
+
+/* Mostrar en pantallas pequeñas */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  #nav-menu {
+    display: none;
+    width: 100%;
+  }
+
+  #nav-menu.active {
+    display: block;
+  }
+}

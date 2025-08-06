@@ -16,7 +16,11 @@
 <body>
   <header>
     <div class="logo">🌱 CarbonOut</div>
-    <nav>
+
+    <!-- Botón hamburguesa -->
+    <button class="hamburger" id="hamburger-btn" aria-label="Menu">☰</button>
+
+    <nav id="nav-menu">
       <ul>
         <li><a href="index.html" class="active" data-i18n="inicio">Inicio</a></li>
         <li><a href="perfil.html" data-i18n="perfil">Perfil</a></li>
@@ -25,16 +29,15 @@
         <li><a href="nosotros.html" data-i18n="nosotros">Nosotros</a></li>
       </ul>
     </nav>
+
     <div class="header-buttons">
       <button id="lang-toggle" class="lang-btn" title="Cambiar idioma">EN</button>
       <button id="logout-btn" class="logout-btn" data-i18n="cerrarSesion">Cerrar sesión</button>
     </div>
   </header>
 
-  <!-- ✅ Botón de instalación PWA -->
-  <button id="installBtn" style="display: none; margin: 1rem auto; padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer;">
-    Instalar CarbonOut
-  </button>
+  <!-- Botón de instalación PWA -->
+  <button id="installBtn" class="install-btn">Instalar CarbonOut</button>
 
   <section class="hero">
     <div class="hero-content">
@@ -74,26 +77,6 @@
   <script type="module" src="firebase-config.js"></script>
   <script type="module" src="script.js"></script>
   <script src="lang.js"></script>
-
-  <!-- ✅ Registrar Service Worker -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./service-worker.js', { scope: './' })
-          .then(() => console.log('✅ SW registrado desde index.html'))
-          .catch(err => console.error('❌ Error al registrar SW:', err));
-      });
-    }
-  </script>
-
-  <!-- ✅ Botón de instalación flotante -->
   <script type="module" src="pwa.js"></script>
-
-  <script>
-  window.addEventListener('beforeinstallprompt', (e) => {
-    console.log('[PWA] ✅ beforeinstallprompt disparado');
-  });
-</script>
-
 </body>
 </html>
