@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title data-i18n="tituloAcciones">Acciones Ecológicas - CarbonOut</title>
+
+  <!-- PWA Essentials -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#4CAF50">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="logo">🌱 CarbonOut</div>
+    <nav>
+      <ul>
+        <li><a href="index.html" data-i18n="inicio">Inicio</a></li>
+        <li><a href="perfil.html" data-i18n="perfil">Perfil</a></li>
+        <li><a href="acciones.html" class="active" data-i18n="acciones">Acciones</a></li>
+        <li><a href="ranking.html" data-i18n="ranking">Ranking</a></li>
+        <li><a href="nosotros.html" data-i18n="nosotros">Nosotros</a></li>
+      </ul>
+    </nav>
+    <div class="header-buttons">
+      <button id="lang-toggle" class="lang-btn" title="Cambiar idioma">EN</button>
+      <button id="btn-notifs">🔔 Habilitar notificaciones</button>
+    </div>
+  </header>
+
+  <section class="acciones-section">
+    <h1 data-i18n="tituloAcciones">Explora Acciones Ecológicas</h1>
+    <p data-i18n="textoAcciones">Elige una categoría y empieza a mejorar tu impacto ambiental hoy mismo.</p>
+
+    <div class="acciones-cards">
+      <div class="card">
+        <img src="images/transporte.jpg" alt="Transporte ecológico">
+        <h3 data-i18n="tituloCardTransporte">Transporte</h3>
+        <p data-i18n="textoCardTransporte">Descubre cómo reducir emisiones al moverte.</p>
+        <button data-i18n="registrarAccion" data-categoria="Transporte">Registrar acción</button>
+      </div>
+
+      <div class="card">
+        <img src="images/energia.jpg" alt="Ahorro energético">
+        <h3 data-i18n="tituloCardEnergia">Energía</h3>
+        <p data-i18n="textoCardEnergia">Ahorra energía en casa con pequeños cambios.</p>
+        <button data-i18n="registrarAccion" data-categoria="Energía">Registrar acción</button>
+      </div>
+
+      <div class="card">
+        <img src="images/alimentacion.jpg" alt="Alimentación sostenible">
+        <h3 data-i18n="tituloCardAlimentacion">Alimentación</h3>
+        <p data-i18n="textoCardAlimentacion">Adopta hábitos alimenticios más sostenibles.</p>
+        <button data-i18n="registrarAccion" data-categoria="Alimentación">Registrar acción</button>
+      </div>
+
+      <div class="card">
+        <img src="images/consumo.jpg" alt="Consumo responsable">
+        <h3 data-i18n="tituloCardConsumo">Consumo</h3>
+        <p data-i18n="textoCardConsumo">Reduce, reutiliza y elige productos responsables.</p>
+        <button data-i18n="registrarAccion" data-categoria="Consumo">Registrar acción</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal para registrar acción -->
+  <div id="accion-modal">
+    <form id="accion-form">
+      <h3 data-i18n="registrarAccion">Registrar acción</h3>
+      <p data-i18n="categoria">Categoría: <span id="categoria-seleccionada"></span></p>
+      <input type="text" id="tipo" data-i18n-placeholder="tipoPlaceholder" placeholder="¿Qué hiciste?" required />
+      <button type="submit" data-i18n="guardarAccion">Guardar acción</button>
+      <button type="button" id="cancelar-modal" data-i18n="cancelar">Cancelar</button>
+    </form>
+  </div>
+
+  <footer>
+    <p data-i18n="pie">© 2025 CarbonOut. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- Script de idioma -->
+  <script src="lang.js"></script>
+
+  <!-- Habilitar notificaciones y registrar SW -->
+  <script type="module">
+    import { enableNotifications } from './notifications.js';
+
+    // Registrar el SW
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js', { scope: './' })
+          .then(() => console.log('✅ SW registrado desde acciones.html'))
+          .catch(err => console.error('❌ Error al registrar SW:', err));
+      });
+    }
+
+    // Habilitar notificaciones con botón
+    document.getElementById('btn-notifs')?.addEventListener('click', async () => {
+      const ok = await enableNotifications();
+      alert(ok ? '✅ Notificaciones activadas' : '❌ No se pudieron activar');
+    });
+  </script>
+
+  <!-- Script principal -->
+  <script type="module" src="acciones.js"></script>
+</body>
+</html>

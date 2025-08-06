@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="miPerfil">Mi Perfil - CarbonOut</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="logo">🌱 CarbonOut</div>
+    <nav>
+      <ul>
+        <li><a href="index.html" data-i18n="inicio">Inicio</a></li>
+        <li><a href="perfil.html" class="active" data-i18n="perfil">Perfil</a></li>
+        <li><a href="acciones.html" data-i18n="acciones">Acciones</a></li>
+        <li><a href="ranking.html" data-i18n="ranking">Ranking</a></li>
+        <li><a href="nosotros.html" data-i18n="nosotros">Nosotros</a></li>
+      </ul>
+    </nav>
+    <button id="lang-toggle" class="lang-btn" title="Cambiar idioma">EN</button>
+  </header>
+
+  <section class="acciones-section">
+    <h1 data-i18n="miPerfil">Mi Perfil</h1>
+    <p><strong data-i18n="perfil">Nombre:</strong> <span id="user-name">Cargando...</span></p>
+    <p><strong data-i18n="puntosTotales">Puntos totales:</strong> <span id="user-points">0</span></p>
+
+    <!-- Botones de opciones -->
+    <div class="perfil-opciones">
+      <button class="perfil-opciones-btn" id="mostrar-form-nombre" data-i18n="cambiarNombre">✏️ Cambiar nombre</button>
+      <button class="perfil-opciones-btn" id="mostrar-form-password" data-i18n="cambiarContrasena">🔒 Cambiar contraseña</button>
+    </div>
+
+    <!-- Formulario cambio de nombre -->
+    <div class="form-box" id="form-nombre" style="display: none;">
+      <input type="text" id="nuevo-nombre" placeholder="Nuevo nombre" data-i18n-placeholder="nuevoNombre">
+      <button id="btn-cambiar-nombre" class="form-btn" data-i18n="guardarCambios">Guardar cambios</button>
+      <p id="msg-cambio-nombre"></p>
+    </div>
+
+    <!-- Formulario cambio de contraseña -->
+    <div class="form-box" id="form-password" style="display: none;">
+      <input type="password" id="password-actual" placeholder="Contraseña actual" data-i18n-placeholder="contrasenaActual">
+      <input type="password" id="nueva-password" placeholder="Nueva contraseña" data-i18n-placeholder="nuevaContrasena">
+      <button id="btn-cambiar-password" class="form-btn" data-i18n="guardarCambios">Guardar cambios</button>
+      <p id="msg-cambio-password"></p>
+    </div>
+
+    <h2 style="margin-top: 40px;" data-i18n="misAcciones">Mis Acciones</h2>
+    <table class="ranking-table">
+      <thead>
+        <tr>
+          <th data-i18n="tipo">Tipo</th>
+          <th data-i18n="fecha">Fecha</th>
+        </tr>
+      </thead>
+      <tbody id="acciones-user-body">
+        <!-- Acciones cargadas dinámicamente -->
+      </tbody>
+    </table>
+  </section>
+
+  <footer>
+    <p data-i18n="pie">© 2025 CarbonOut. Todos los derechos reservados.</p>
+  </footer>
+
+  <script type="module" src="perfil-script.js"></script>
+  <script src="lang.js"></script>
+</body>
+</html>

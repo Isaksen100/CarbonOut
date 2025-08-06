@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title data-i18n="login">Iniciar sesión - CarbonOut</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="auth-page">
+  <div class="auth-container">
+    <div class="logo" style="font-size: 1.8em; margin-bottom: 10px;">
+      🌱 <strong style="color:#2e7d32;">CarbonOut</strong>
+    </div>
+
+    <h2 data-i18n="login">Iniciar sesión</h2>
+
+    <input
+      type="email"
+      id="login-email"
+      data-i18n-placeholder="correo"
+      placeholder="Correo electrónico"
+      required
+    />
+    <input
+      type="password"
+      id="login-password"
+      data-i18n-placeholder="contrasena"
+      placeholder="Contraseña"
+      required
+    />
+    <button id="login-btn" data-i18n="login">Iniciar sesión</button>
+
+    <button id="lang-toggle" class="lang-btn-inside" title="Cambiar idioma">EN</button>
+
+    <p id="loginMsg"></p>
+    <p class="switch-auth">
+      <span data-i18n="noCuenta">¿No tienes cuenta?</span>
+      <a href="signup.html" data-i18n="signup">Regístrate</a>
+    </p>
+  </div>
+
+  <script type="module" src="firebase-config.js"></script>
+  <script type="module" src="script.js"></script>
+  <script src="lang.js"></script>
+</body>
+</html>
