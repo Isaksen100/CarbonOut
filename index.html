@@ -10,28 +10,28 @@
   <link rel="icon" href="icons/logo-192.png" type="image/png">
 </head>
 <body>
-
   <header>
-    <div class="logo">🌱 CarbonOut</div>
-    
-    <!-- Botón hamburguesa (solo móvil) -->
-    <button class="hamburger" id="hamburger-btn" aria-label="Menú">&#9776;</button>
+    <div class="logo">
+      <img src="icons/logo-192.png" alt="Logo" style="height: 30px; vertical-align: middle;">
+      <span style="margin-left: 8px;">CarbonOut</span>
+    </div>
 
-    <!-- Menú de navegación -->
+    <button id="hamburger-btn" class="hamburger">&#9776;</button>
+
     <nav id="nav-menu">
       <ul>
-        <li><a href="index.html" class="active" data-i18n="inicio">Inicio</a></li>
-        <li><a href="perfil.html" data-i18n="perfil">Perfil</a></li>
-        <li><a href="acciones.html" data-i18n="acciones">Acciones</a></li>
-        <li><a href="ranking.html" data-i18n="ranking">Ranking</a></li>
-        <li><a href="nosotros.html" data-i18n="nosotros">Nosotros</a></li>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="perfil.html">Perfil</a></li>
+        <li><a href="acciones.html">Acciones</a></li>
+        <li><a href="ranking.html">Ranking</a></li>
+        <li><a href="nosotros.html">Nosotros</a></li>
       </ul>
     </nav>
 
-    <!-- Botones de idioma y sesión -->
     <div class="header-buttons">
-      <button id="lang-toggle" class="lang-btn" title="Cambiar idioma">EN</button>
-      <button id="logout-btn" class="logout-btn" data-i18n="cerrarSesion">Cerrar sesión</button>
+      <button id="langBtn" class="lang-btn">EN</button>
+      <button id="logout-btn" class="logout-btn" style="display: none;">Cerrar sesión</button>
+      <button id="installBtn" class="install-btn">Instalar app</button>
     </div>
   </header>
 
@@ -40,7 +40,30 @@
       <h1><span class="highlight">CarbonOut</span></h1>
       <p>Elige una categoría y empieza a mejorar tu impacto ambiental hoy mismo.</p>
     </div>
+
+    <!-- Tarjetas de categorías -->
+    <div class="hero-cards">
+      <div class="card">
+        <img src="images/card-recicla.jpg" alt="Recicla">
+        <h3>Recicla</h3>
+        <p>Reduce tu huella reciclando plástico, vidrio, papel y más.</p>
+      </div>
+      <div class="card">
+        <img src="images/card-plantas.jpg" alt="Planta árboles">
+        <h3>Planta un árbol</h3>
+        <p>Contribuye al planeta sembrando vida y oxígeno.</p>
+      </div>
+      <div class="card">
+        <img src="images/card-transporte.jpg" alt="Transporte verde">
+        <h3>Transporte verde</h3>
+        <p>Usa bicicleta, camina o comparte auto para reducir emisiones.</p>
+      </div>
+    </div>
   </section>
+
+  <footer>
+    <p>&copy; 2025 CarbonOut. Todos los derechos reservados.</p>
+  </footer>
 
   <script type="module" src="script.js"></script>
 </body>
