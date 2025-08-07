@@ -13,6 +13,7 @@ const traducciones = {
     guardarAccion: "Guardar acción",
     cancelar: "Cancelar",
     cerrarSesion: "Cerrar sesión",
+    instalarApp: "📲 Instalar App",
 
     // Formularios
     correo: "Correo electrónico",
@@ -86,6 +87,7 @@ const traducciones = {
     guardarAccion: "Save action",
     cancelar: "Cancel",
     cerrarSesion: "Log out",
+    instalarApp: "📲 Install App",
 
     // Forms
     correo: "Email",

@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, getDocs, query, where, updateDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, getDocs, query, where, updateDoc, doc, Timestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { getAuth, onAuthStateChanged, reauthenticateWithCredential, EmailAuthProvider, updatePassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { firebaseConfig } from "./firebase-config.js";
 
@@ -57,10 +57,28 @@ onAuthStateChanged(auth, async (user) => {
     snapshot.forEach((docSnap) => {
       const data = docSnap.data();
       totalPuntos += data.Puntos || 0;
+
+      // Formatear fecha desde Timestamp
+      let fechaFormateada = "";
+      if (data.Fecha instanceof Timestamp) {
+        const dateObj = data.Fecha.toDate();
+        fechaFormateada = dateObj.toLocaleString("es-MX", {
+          timeZone: "America/Mexico_City",
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true,
+        });
+      } else {
+        fechaFormateada = data.Fecha || "Fecha no disponible";
+      }
+
       accionesBody.innerHTML += `
         <tr>
           <td>${data.Tipo}</td>
-          <td>${data.Fecha}</td>
+          <td>${fechaFormateada}</td>
         </tr>
       `;
     });
