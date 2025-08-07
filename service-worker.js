@@ -1,4 +1,4 @@
-const CACHE_NAME = 'carbonout-cache-v2';
+const CACHE_NAME = 'carbonout-cache-v3'; // ⬅️ IMPORTANTE: actualiza el nombre cada vez que subas nueva versión
 
 const urlsToCache = [
   './',
@@ -7,6 +7,11 @@ const urlsToCache = [
   './manifest.json',
   './icons/logo-192.png',
   './icons/logo-512.png',
+  './images/bg-nature.jpg',
+  './images/transporte.jpg',
+  './images/energia.jpg',
+  './images/alimentacion.jpg',
+  './images/consumo.jpg',
   './acciones.html',
   './acciones.js',
   './perfil.html',
@@ -20,7 +25,7 @@ const urlsToCache = [
   './notifications.js'
 ];
 
-// Instalación: cachea archivos
+// Instalación: cachea los archivos clave
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -29,43 +34,45 @@ self.addEventListener('install', (event) => {
   );
 });
 
-// Activación: limpia cachés viejos
+// Activación: elimina versiones antiguas de caché
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     (async () => {
-      const cacheNames = await caches.keys();
+      const keys = await caches.keys();
       await Promise.all(
-        cacheNames.filter(name => name !== CACHE_NAME).map(name => caches.delete(name))
+        keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
       );
       await self.clients.claim();
     })()
   );
 });
 
-// Interceptar solicitudes: cache-first
+// Interceptar fetch: estrategia cache-first + actualiza en background
 self.addEventListener('fetch', (event) => {
-  const req = event.request;
-  if (req.method !== 'GET') return;
+  if (event.request.method !== 'GET') return;
 
   event.respondWith(
-    caches.match(req).then((cached) => {
-      return cached || fetch(req).then((response) => {
-        const resClone = response.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(req, resClone);
-        });
-        return response;
+    caches.match(event.request).then((cachedResponse) => {
+      const fetchPromise = fetch(event.request).then((networkResponse) => {
+        if (networkResponse && networkResponse.status === 200) {
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, networkResponse.clone());
+          });
+        }
+        return networkResponse;
       }).catch(() => {
-        // Opcional: fallback si quieres
-        if (req.mode === 'navigate') {
+        // Fallback si estás navegando sin conexión
+        if (event.request.mode === 'navigate') {
           return caches.match('./index.html');
         }
       });
+
+      return cachedResponse || fetchPromise;
     })
   );
 });
 
-// Manejo de clics en notificaciones
+// Notificaciones
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
 
