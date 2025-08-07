@@ -1,4 +1,4 @@
-const CACHE_NAME = 'carbonout-cache-v4';
+const CACHE_NAME = 'carbonout-cache-v5';
 
 const urlsToCache = [
   './',
@@ -25,69 +25,59 @@ const urlsToCache = [
   './notifications.js'
 ];
 
-// Instalación
+// 🛠️ Forzar limpieza completa
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(urlsToCache);
-    }).then(() => self.skipWaiting())
-  );
+  self.skipWaiting();
 });
 
-// Activación
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    (async () => {
-      const keys = await caches.keys();
-      await Promise.all(
-        keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
-      );
-      await self.clients.claim();
-    })()
+    caches.keys().then((keys) =>
+      Promise.all(keys.map((key) => caches.delete(key)))
+    ).then(() => self.clients.claim())
   );
 });
 
-// Fetch: cache-first
+// ✅ Network-first para HTML, cache-first para todo lo demás
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
-  event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      const fetchPromise = fetch(event.request).then((networkResponse) => {
-        if (networkResponse && networkResponse.status === 200) {
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, networkResponse.clone());
-          });
-        }
-        return networkResponse;
-      }).catch(() => {
-        if (event.request.mode === 'navigate') {
-          return caches.match('./index.html');
-        }
-      });
+  const req = event.request;
+  const isHTML = req.headers.get('accept')?.includes('text/html');
 
-      return cachedResponse || fetchPromise;
-    })
-  );
+  if (isHTML) {
+    event.respondWith(
+      fetch(req)
+        .then((res) => {
+          const resClone = res.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(req, resClone));
+          return res;
+        })
+        .catch(() => caches.match(req))
+    );
+  } else {
+    event.respondWith(
+      caches.match(req).then((cached) =>
+        cached ||
+        fetch(req).then((res) => {
+          const resClone = res.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(req, resClone));
+          return res;
+        })
+      )
+    );
+  }
 });
 
 // Notificaciones
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
-  event.waitUntil((async () => {
-    const allClients = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
-    let client = allClients.find(c => 'focus' in c);
-    if (client) {
-      client.focus();
-    } else if (self.clients.openWindow) {
-      await self.clients.openWindow('./index.html');
-    }
-  })());
-});
-
-// 💡 Forzar actualización inmediata
-self.addEventListener('message', (event) => {
-  if (event.data === 'SKIP_WAITING') {
-    self.skipWaiting();
-  }
+  event.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true })
+      .then((clients) => {
+        const client = clients.find((c) => 'focus' in c);
+        if (client) return client.focus();
+        return self.clients.openWindow('./index.html');
+      })
+  );
 });
