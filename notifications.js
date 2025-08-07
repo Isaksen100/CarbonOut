@@ -1,6 +1,23 @@
 const DEFAULT_ICON = './icons/logo-192.png';
 const DEFAULT_BADGE = './icons/logo-192.png';
 
+// Detecta el idioma actual
+function getIdiomaActual() {
+  return localStorage.getItem("idioma") || "es";
+}
+
+// Traducciones de mensajes
+const mensajesNotificacion = {
+  es: {
+    titulo: (p) => `¡Ganaste ${p} puntos!`,
+    cuerpo: "Sigue sumando acciones ecológicas 🌱"
+  },
+  en: {
+    titulo: (p) => `You earned ${p} points!`,
+    cuerpo: "Keep adding eco-friendly actions 🌱"
+  }
+};
+
 // Solicita permiso al usuario para mostrar notificaciones
 export async function enableNotifications() {
   if (!('Notification' in window)) return false;
@@ -51,9 +68,13 @@ export async function notify({
   }
 }
 
-// Notificación específica al ganar puntos
+// Notificación específica al ganar puntos (soporta idioma)
 export async function notifyPoints(points, extra = '') {
-  const title = `¡Ganaste ${points} puntos!`;
-  const body = extra || 'Sigue sumando acciones ecológicas 🌱';
+  const lang = getIdiomaActual();
+  const t = mensajesNotificacion[lang] || mensajesNotificacion.es;
+
+  const title = t.titulo(points);
+  const body = extra || t.cuerpo;
+
   await notify({ title, body, tag: 'points' });
 }

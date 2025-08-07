@@ -20,8 +20,6 @@ const traducciones = {
     correo: "Correo electrónico",
     contrasena: "Contraseña",
     nombre: "Nombre completo",
-    signup: "Registrarse",
-    login: "Inicia sesión",
     yaCuenta: "¿Ya tienes cuenta?",
     noCuenta: "¿No tienes cuenta?",
     tipoPlaceholder: "¿Qué hiciste?",
@@ -95,8 +93,6 @@ const traducciones = {
     correo: "Email",
     contrasena: "Password",
     nombre: "Full name",
-    signup: "Sign up",
-    login: "Login",
     yaCuenta: "Already have an account?",
     noCuenta: "Don't have an account?",
     tipoPlaceholder: "What did you do?",
@@ -157,31 +153,39 @@ function cambiarIdioma(lang) {
   // Cambiar innerText según data-i18n
   document.querySelectorAll("[data-i18n]").forEach(el => {
     const key = el.getAttribute("data-i18n");
-    if (traducciones[lang][key]) {
-      el.innerText = traducciones[lang][key];
+    const texto = traducciones[lang][key];
+    if (texto !== undefined) {
+      el.textContent = texto;
     }
   });
 
   // Cambiar placeholder según data-i18n-placeholder
   document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
     const key = el.getAttribute("data-i18n-placeholder");
-    if (traducciones[lang][key]) {
-      el.placeholder = traducciones[lang][key];
+    const texto = traducciones[lang][key];
+    if (texto !== undefined) {
+      el.placeholder = texto;
     }
   });
+
+  // Actualizar texto del botón de cambio de idioma
+  const toggle = document.getElementById("lang-toggle");
+  if (toggle) {
+    toggle.textContent = lang === "es" ? "EN" : "ES";
+  }
 }
 
 function iniciarIdioma() {
-  const lang = localStorage.getItem("idioma") || "es";
+  let lang = localStorage.getItem("idioma") || "es";
   cambiarIdioma(lang);
 
   const toggle = document.getElementById("lang-toggle");
   if (toggle) {
     toggle.textContent = lang === "es" ? "EN" : "ES";
     toggle.addEventListener("click", () => {
-      const nuevo = lang === "es" ? "en" : "es";
-      localStorage.setItem("idioma", nuevo);
-      location.reload(); // Recargar para aplicar cambios
+      lang = lang === "es" ? "en" : "es";
+      cambiarIdioma(lang);
+      localStorage.setItem("idioma", lang);
     });
   }
 }
