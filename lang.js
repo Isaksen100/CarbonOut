@@ -14,6 +14,7 @@ const traducciones = {
     cancelar: "Cancelar",
     cerrarSesion: "Cerrar sesión",
     instalarApp: "📲 Instalar App",
+    notificaciones: "🔔 Notificaciones",
 
     // Formularios
     correo: "Correo electrónico",
@@ -88,6 +89,7 @@ const traducciones = {
     cancelar: "Cancel",
     cerrarSesion: "Log out",
     instalarApp: "📲 Install App",
+    notificaciones: "🔔 Notifications",
 
     // Forms
     correo: "Email",

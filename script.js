@@ -134,6 +134,8 @@ window.addEventListener('beforeinstallprompt', (e) => {
 
   if (installBtn) {
     installBtn.style.display = 'inline-block';
+    installBtn.setAttribute('data-i18n', 'instalarApp');
+    cambiarIdioma(localStorage.getItem('idioma') || 'es');
     installBtn.addEventListener('click', async () => {
       if (deferredPrompt) {
         deferredPrompt.prompt();
