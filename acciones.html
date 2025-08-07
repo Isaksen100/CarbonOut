@@ -13,7 +13,11 @@
 <body>
   <header>
     <div class="logo">🌱 CarbonOut</div>
-    <nav>
+    
+    <!-- Botón hamburguesa -->
+    <button class="hamburger" id="hamburger-btn">☰</button>
+
+    <nav id="nav-menu">
       <ul>
         <li><a href="index.html" data-i18n="inicio">Inicio</a></li>
         <li><a href="perfil.html" data-i18n="perfil">Perfil</a></li>
@@ -22,6 +26,7 @@
         <li><a href="nosotros.html" data-i18n="nosotros">Nosotros</a></li>
       </ul>
     </nav>
+
     <div class="header-buttons">
       <button id="lang-toggle" class="lang-btn" title="Cambiar idioma">EN</button>
       <button id="notify-btn" class="notify-btn">🔔 Notificaciones</button>
@@ -81,11 +86,18 @@
   <!-- Script de idioma -->
   <script src="lang.js"></script>
 
-  <!-- Habilitar notificaciones y registrar SW -->
+  <!-- Script de notificaciones -->
   <script type="module">
     import { enableNotifications } from './notifications.js';
 
-    // Registrar el SW
+    document.getElementById('notify-btn')?.addEventListener('click', async () => {
+      const ok = await enableNotifications();
+      alert(ok ? '✅ Notificaciones activadas' : '❌ No se pudieron activar');
+    });
+  </script>
+
+  <!-- SW y funcionalidad principal -->
+  <script type="module">
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./service-worker.js', { scope: './' })
@@ -93,15 +105,10 @@
           .catch(err => console.error('❌ Error al registrar SW:', err));
       });
     }
-
-    // Habilitar notificaciones con botón
-    document.getElementById('btn-notifs')?.addEventListener('click', async () => {
-      const ok = await enableNotifications();
-      alert(ok ? '✅ Notificaciones activadas' : '❌ No se pudieron activar');
-    });
   </script>
 
-  <!-- Script principal -->
+  <!-- Scripts de lógica -->
+  <script type="module" src="script.js"></script>
   <script type="module" src="acciones.js"></script>
 </body>
 </html>
