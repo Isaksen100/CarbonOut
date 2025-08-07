@@ -677,21 +677,30 @@ footer {
 }
 
 /* Botón de notificaciones */
-#notifyBtn {
+#notificationBtn {
   background-color: #4CAF50;
   color: white;
-  font-weight: bold;
-  padding: 10px 16px;
   border: none;
-  border-radius: 10px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: bold;
   cursor: pointer;
-  font-size: 0.9rem;
-  margin: 10px 0;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
-#notifyBtn:hover {
+#notificationBtn:hover {
   background-color: #388e3c;
+  transform: translateY(-1px);
+}
+
+#notificationBtn:active {
+  background-color: #2e7d32;
+  transform: translateY(0);
 }
 
 /* Estilo para mensajes tipo notificación dentro de la app */

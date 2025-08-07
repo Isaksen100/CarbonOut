@@ -1,15 +1,14 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, Timestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { firebaseConfig } from "./firebase-config.js";
-import { notifyPoints } from "./notifications.js"; // ✅ NUEVO
+import { notifyPoints } from "./notifications.js";
 
 // Inicializar Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-// Variables para el usuario
 let userUID = null;
 
 // Detectar usuario autenticado
@@ -28,7 +27,7 @@ const form = document.getElementById("accion-form");
 const categoriaSpan = document.getElementById("categoria-seleccionada");
 const cancelarBtn = document.getElementById("cancelar-modal");
 
-// Inicialización de eventos
+// Inicializar evento de apertura de modal
 window.addEventListener("DOMContentLoaded", () => {
   modal.classList.remove("visible");
 
@@ -62,23 +61,10 @@ form.addEventListener("submit", async (e) => {
     return;
   }
 
-  const fechaActual = new Date();
-  const opciones = {
-    timeZone: "America/Mexico_City",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: true
-  };
-  const fecha = fechaActual.toLocaleString("es-MX", opciones) + " UTC-6";
-
   try {
     await addDoc(collection(db, "acciones"), {
       Tipo: tipo,
-      Fecha: fecha,
+      Fecha: Timestamp.now(), // Guardamos como objeto Timestamp (sin comillas)
       Usuario: userUID,
       Puntos: 10
     });
@@ -87,7 +73,7 @@ form.addEventListener("submit", async (e) => {
     modal.classList.remove("visible");
     form.reset();
 
-    await notifyPoints(10, '¡Gracias por tu contribución! 🌍'); // ✅ NUEVO: Notificación al ganar puntos
+    await notifyPoints(10, '¡Gracias por tu contribución! 🌍');
   } catch (error) {
     alert("Error al guardar la acción: " + error.message);
     console.error("Error al guardar la acción:", error);
