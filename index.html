@@ -4,60 +4,64 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title data-i18n="tituloIndex">CarbonOut - Acción por el Clima</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#4CAF50">
-  <link rel="icon" href="icons/logo-192.png" type="image/png">
+
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#4CAF50" />
+  <link rel="icon" href="icons/logo-192.png" type="image/png" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header>
     <div class="logo">🌱 CarbonOut</div>
-
-    <button id="hamburger-btn" class="hamburger">&#9776;</button>
-
-    <nav id="nav-menu" class="nav-menu">
-      <ul>
-        <li><a href="index.html" data-i18n="inicio">Inicio</a></li>
+    <nav>
+      <ul id="nav-menu">
+        <li><a href="index.html" data-i18n="inicio" class="active">Inicio</a></li>
         <li><a href="perfil.html" data-i18n="perfil">Perfil</a></li>
         <li><a href="acciones.html" data-i18n="acciones">Acciones</a></li>
         <li><a href="ranking.html" data-i18n="ranking">Ranking</a></li>
         <li><a href="nosotros.html" data-i18n="nosotros">Nosotros</a></li>
       </ul>
     </nav>
-
     <div class="header-buttons">
-      <button id="langBtn" class="lang-btn">EN</button>
-      <button id="logout-btn" class="logout-btn" style="display: none;" data-i18n="cerrarSesion">Cerrar sesión</button>
-      <button id="installBtn" class="install-btn" data-i18n="instalarApp">Instalar app</button>
+      <button id="lang-toggle" class="lang-btn" title="Cambiar idioma">EN</button>
+      <button id="installBtn" class="install-btn">📲 Instalar App</button>
+      <button id="logout-btn" class="logout-btn" style="display:none;">Cerrar sesión</button>
     </div>
   </header>
 
   <section class="hero">
     <div class="hero-content">
-      <h1><span class="highlight">CarbonOut</span></h1>
-      <p data-i18n="subtituloHero">Elige una categoría y empieza a mejorar tu impacto ambiental hoy mismo.</p>
-    </div>
+      <h1 data-i18n="bienvenida">¡Bienvenido a <span class="highlight">CarbonOut</span>!</h1>
+      <p data-i18n="descripcionApp">Tu app para combatir el cambio climático con acciones simples y efectivas.</p>
 
-    <div class="hero-cards">
-      <div class="card">
-        <img src="images/transporte.jpg" alt="Transporte ecológico">
-        <h3 data-i18n="tituloCardTransporte">Transporte</h3>
-        <p data-i18n="textoCardTransporte">Descubre cómo reducir emisiones al moverte.</p>
+      <div class="search-bar">
+        <input type="text" data-i18n-placeholder="buscarAcciones" placeholder="Buscar acciones...">
+        <button data-i18n="buscar">Buscar</button>
       </div>
-      <div class="card">
-        <img src="images/energia.jpg" alt="Energía">
-        <h3 data-i18n="tituloCardEnergia">Energía</h3>
-        <p data-i18n="textoCardEnergia">Ahorra energía en casa con pequeños cambios.</p>
-      </div>
-      <div class="card">
-        <img src="images/alimentacion.jpg" alt="Alimentación sostenible">
-        <h3 data-i18n="tituloCardAlimentacion">Alimentación</h3>
-        <p data-i18n="textoCardAlimentacion">Adopta hábitos alimenticios más sostenibles.</p>
-      </div>
-      <div class="card">
-        <img src="images/consumo.jpg" alt="Consumo responsable">
-        <h3 data-i18n="tituloCardConsumo">Consumo</h3>
-        <p data-i18n="textoCardConsumo">Reduce, reutiliza y elige productos responsables.</p>
+
+      <button class="explore-btn" onclick="location.href='acciones.html'" data-i18n="explorar">Explorar acciones</button>
+
+      <div class="hero-cards">
+        <div class="card">
+          <img src="images/transporte.jpg" alt="Transporte ecológico">
+          <h3 data-i18n="tituloCardTransporte">Transporte</h3>
+          <p data-i18n="textoCardTransporte">Descubre cómo reducir emisiones al moverte.</p>
+        </div>
+        <div class="card">
+          <img src="images/energia.jpg" alt="Ahorro energético">
+          <h3 data-i18n="tituloCardEnergia">Energía</h3>
+          <p data-i18n="textoCardEnergia">Ahorra energía en casa con pequeños cambios.</p>
+        </div>
+        <div class="card">
+          <img src="images/alimentacion.jpg" alt="Alimentación sostenible">
+          <h3 data-i18n="tituloCardAlimentacion">Alimentación</h3>
+          <p data-i18n="textoCardAlimentacion">Adopta hábitos alimenticios más sostenibles.</p>
+        </div>
+        <div class="card">
+          <img src="images/consumo.jpg" alt="Consumo responsable">
+          <h3 data-i18n="tituloCardConsumo">Consumo</h3>
+          <p data-i18n="textoCardConsumo">Reduce, reutiliza y elige productos responsables.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -66,7 +70,8 @@
     <p data-i18n="pie">© 2025 CarbonOut. Todos los derechos reservados.</p>
   </footer>
 
-  <script type="module" src="script.js"></script>
+  <!-- Scripts -->
   <script src="lang.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>

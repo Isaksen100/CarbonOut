@@ -150,10 +150,10 @@ window.addEventListener('beforeinstallprompt', (e) => {
   }
 });
 
-// Menú hamburguesa
-document.getElementById('hamburger-btn')?.addEventListener('click', () => {
-  const navMenu = document.getElementById('nav-menu');
-  navMenu.classList.toggle('active');
-});
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.ready.then((registration) => {
+    registration.active.postMessage('SKIP_WAITING');
+  });
+}
 
 export { registrarUsuario, login, logout };

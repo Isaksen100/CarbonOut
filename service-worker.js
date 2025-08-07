@@ -1,4 +1,4 @@
-const CACHE_NAME = 'carbonout-cache-v3'; // ⬅️ IMPORTANTE: actualiza el nombre cada vez que subas nueva versión
+const CACHE_NAME = 'carbonout-cache-v3';
 
 const urlsToCache = [
   './',
@@ -25,7 +25,7 @@ const urlsToCache = [
   './notifications.js'
 ];
 
-// Instalación: cachea los archivos clave
+// Instalación
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -34,7 +34,7 @@ self.addEventListener('install', (event) => {
   );
 });
 
-// Activación: elimina versiones antiguas de caché
+// Activación
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     (async () => {
@@ -47,7 +47,7 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Interceptar fetch: estrategia cache-first + actualiza en background
+// Fetch: cache-first
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
@@ -61,7 +61,6 @@ self.addEventListener('fetch', (event) => {
         }
         return networkResponse;
       }).catch(() => {
-        // Fallback si estás navegando sin conexión
         if (event.request.mode === 'navigate') {
           return caches.match('./index.html');
         }
@@ -75,7 +74,6 @@ self.addEventListener('fetch', (event) => {
 // Notificaciones
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
-
   event.waitUntil((async () => {
     const allClients = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
     let client = allClients.find(c => 'focus' in c);
@@ -85,4 +83,11 @@ self.addEventListener('notificationclick', (event) => {
       await self.clients.openWindow('./index.html');
     }
   })());
+});
+
+// 💡 Forzar actualización inmediata
+self.addEventListener('message', (event) => {
+  if (event.data === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
